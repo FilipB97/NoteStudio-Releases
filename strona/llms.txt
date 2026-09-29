@@ -1,0 +1,18 @@
+# NoteStudio
+
+> NoteStudio to lokalny asystent spotkań na Windows 10 i 11: wykrywa rozmowy w Teams, nagrywa dwie osobne ścieżki audio (mikrofon i uczestników), transkrybuje je Whisperem i podsumowuje lokalnym modelem językowym przez LM Studio. Nagrania, transkrypcje i notatki nie opuszczają komputera; aplikacja nie ma telemetrii.
+
+Aktualna wersja: {{WERSJA}}, wydana {{DATA}}. Instalator jest bezpłatny i niepodpisany (SmartScreen ostrzega przy pierwszym uruchomieniu). Interfejs jest po polsku. Autor: Filip Benklewski. Kod źródłowy jest w prywatnym repozytorium; publiczne repozytorium zawiera tylko instalatory i notatki wydań.
+
+## Pobieranie
+
+- [Instalator NoteStudio {{WERSJA}}]({{POBIERZ_URL}}): plik {{PLIK}}, {{ROZMIAR}}, Windows x64.
+- [Notatki wydania {{WERSJA}}]({{NOTATKI_URL}}): lista zmian w tej wersji.
+- [Wszystkie wydania]({{WYDANIA_URL}}): poprzednie wersje i ich notatki.
+
+## Strona
+
+- [Jak działa]({{ADRES}}#jak): wykrywanie rozmowy, nagrywanie dwóch ścieżek, transkrypcja po spotkaniu, podsumowanie z decyzjami i zadaniami, eksport do Notion, Markdown albo webhooka.
+- [Prywatność]({{ADRES}}#prywatnosc): co wychodzi z komputera (domyślnie nic; integracje i model w chmurze tylko po włączeniu, sprawdzenie aktualizacji tylko na kliknięcie).
+- [Instalacja i wymagania]({{ADRES}}#instalacja): Windows 10/11 x64, Microsoft Visual C++ 2015–2022 Redistributable, LM Studio z serwerem lokalnym, suma SHA-256 instalatora.
+- [Pytania]({{ADRES}}#pytania): praca offline, inne komunikatory niż Teams, wymagania sprzętowe, aktualizacje.
