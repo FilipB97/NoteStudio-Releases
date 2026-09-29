@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; base-uri 'self'; form-action 'none'">
+<meta name="robots" content="noindex">
+<title>Nie ma takiej strony – NoteStudio</title>
+<link rel="icon" href="{{SCIEZKA}}img/favicon.svg" type="image/svg+xml">
+<script src="{{SCIEZKA}}js/motyw-start.js"></script>
+<style>
+@font-face{font-family:"Plex Sans";font-weight:600;font-display:swap;src:url({{SCIEZKA}}fonts/ibm-plex-sans-semibold.woff2) format("woff2")}
+@font-face{font-family:"Plex Mono";font-weight:400;font-display:swap;src:url({{SCIEZKA}}fonts/ibm-plex-mono-regular.woff2) format("woff2")}
+:root{color-scheme:light;--ground:#eceef2;--ink:#14161a;--soft:#4d5154;--accent:#8a5a00;--on:#fff;--self:#22509e;--others:#9a6a14}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--ground:#0e1013;--ink:#e6e9ed;--soft:#aaadb3;--accent:#edb054;--on:#1a1204;--self:#6fa8ff;--others:#e0954a}}
+:root[data-theme="dark"]{color-scheme:dark;--ground:#0e1013;--ink:#e6e9ed;--soft:#aaadb3;--accent:#edb054;--on:#1a1204;--self:#6fa8ff;--others:#e0954a}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;display:grid;place-items:center;padding:32px 16px;background:var(--ground);color:var(--soft);font:16px/1.6 "Plex Sans",system-ui,sans-serif;text-align:center}
+.cisza{display:flex;gap:4px;justify-content:center;align-items:center;height:40px;margin-bottom:24px}
+.cisza i{width:4px;height:3px;border-radius:2px;background:var(--self)}
+.cisza i:nth-child(even){background:var(--others)}
+.kod{font:400 14px "Plex Mono",monospace;letter-spacing:.1em;color:var(--accent)}
+h1{color:var(--ink);font-size:clamp(28px,6vw,40px);line-height:1.15;margin:10px 0 12px}
+a{display:inline-block;margin-top:24px;background:var(--accent);color:var(--on);font-weight:600;text-decoration:none;padding:12px 20px;border-radius:10px}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+</head>
+<body>
+<main>
+  <div class="cisza" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <p class="kod">404 · cisza na obu ścieżkach</p>
+  <h1>Nie ma tu takiej strony.</h1>
+  <p>Adres mógł się zmienić. Instalator i notatki wydania są na stronie głównej.</p>
+  <a href="{{SCIEZKA}}">Wróć do NoteStudio</a>
+</main>
+</body>
+</html>

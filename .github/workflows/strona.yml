@@ -1,0 +1,85 @@
+# Strona wydań na GitHub Pages: https://filipb97.github.io/NoteStudio-Releases/
+# Dane wydania (wersja, rozmiar, SHA-256, nowości) wstawia scripts/zbuduj.js W CZASIE BUDOWANIA, więc strona
+# przebudowuje się sama po każdym opublikowanym wydaniu i nie odpytuje GitHuba z przeglądarki.
+name: Strona
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [published, edited, deleted]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: strona-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # Wydanie uruchamia workflow na ref tagu, a środowisko github-pages domyślnie przyjmuje wdrożenia tylko z main.
+  # Zamiast luzować tę ochronę, wydanie zleca zwykłe przebudowanie z main (workflow_dispatch wolno wywołać GITHUB_TOKEN-em).
+  po-wydaniu:
+    name: Przebudowa po zmianie wydania
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write
+    steps:
+      - run: gh workflow run strona.yml --repo "$GITHUB_REPOSITORY" --ref main
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+  kontrole:
+    name: Strona w przeglądarce (360–1440 px, oba motywy)
+    if: github.event_name != 'release'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Składnia skryptów
+        run: for f in scripts/*.js strona/js/*.js; do node --check "$f"; done
+      - name: Playwright z Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.1
+          npx playwright install --with-deps chromium
+      - name: Brak przewijania w poziomie, brakujących plików, błędów JS, żądań do stron trzecich; reguły audytu
+        run: node scripts/sprawdz-strone.js
+
+  wdrozenie:
+    name: Publikacja na GitHub Pages
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    needs: kontrole
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.pages.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: actions/configure-pages@v5
+        id: konfiguracja
+      - name: Zbuduj stronę z najnowszym wydaniem
+        run: node scripts/zbuduj.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          STRONA_ADRES: ${{ steps.konfiguracja.outputs.base_url }}/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+      - uses: actions/deploy-pages@v4
+        id: pages
